@@ -1,0 +1,1 @@
+window.SERTAO_CONFIG = { supabaseUrl: '', supabaseAnonKey: '' };
