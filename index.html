@@ -125,16 +125,89 @@
 
 <section class="inscription" id="inscricao">
   <div class="inscription-copy">
-    <span class="section-tag pale">INSCRIÇÃO</span>
+    <span class="section-tag pale">INSCRIÇÃO SERTÃO 2027</span>
     <h2>Seu primeiro passo começa aqui.</h2>
-    <p>O formulário oficial mantém a mesma ficha de inscrição utilizada pela IDE: dados pessoais, igreja e liderança, experiência missionária e perguntas para conhecermos você.</p>
-    <p class="privacy"><b>Importante:</b> RG, CPF e informações médicas devem ser enviados somente pelo formulário oficial. Esses dados não são exibidos publicamente neste site.</p>
+    <p>Preencha a pré-inscrição com atenção. A equipe da IDE Missões analisará as respostas, entrará em contato com você e depois confirmará o envio com seu pastor ou líder.</p>
+    <div class="form-summary">
+      <div><span>GRUPO 01</span><b>Novatos</b><small>21/01 a 01/02 • 14 vagas</small></div>
+      <div><span>GRUPO 02</span><b>Veteranos</b><small>11/02 a 21/02 • 14 vagas</small></div>
+    </div>
+    <p class="privacy"><b>Privacidade:</b> o formulário inclui RG, CPF e informações médicas. Esses dados serão usados exclusivamente pela organização da expedição e não serão exibidos publicamente.</p>
   </div>
-  <div class="form-box">
-    <div class="form-date"><span>ABERTURA</span><b>01 OUT 2026</b></div>
-    <div class="form-date"><span>VAGAS</span><b>14 + 14</b></div>
-    <a id="formButton" class="btn primary full" href="https://docs.google.com/forms/d/1K5wETWz6S906fW1ygdfxl0ePxep0zxfPFF4__TMx3eQ/viewform" target="_blank" rel="noopener">Abrir formulário oficial</a>
-    <p id="formStatus" class="form-status">As inscrições abrem em 01/10/2026.</p>
+  <div class="application-wrap">
+    <form id="applicationForm" class="application-form" novalidate>
+      <div class="form-progress"><span id="progressBar"></span></div>
+      <div class="step-indicator"><b id="stepLabel">Etapa 1 de 5</b><span id="stepTitle">Seu grupo</span></div>
+
+      <fieldset class="form-step active" data-step="1">
+        <legend>Você já participou da missão no Sertão?</legend>
+        <p class="field-help">Essa resposta define automaticamente a equipe em que sua inscrição será analisada.</p>
+        <div class="choice-grid">
+          <label class="choice"><input type="radio" name="ja_participou_sertao" value="Não" required><span><b>Não</b><small>Grupo 01 · Novatos</small></span></label>
+          <label class="choice"><input type="radio" name="ja_participou_sertao" value="Sim" required><span><b>Sim</b><small>Grupo 02 · Veteranos</small></span></label>
+        </div>
+        <div id="groupResult" class="group-result" hidden></div>
+      </fieldset>
+
+      <fieldset class="form-step" data-step="2">
+        <legend>Sobre você</legend>
+        <div class="fields two">
+          <label><span>Nome completo *</span><input name="nome_completo" autocomplete="name" required></label>
+          <label><span>E-mail *</span><input type="email" name="email" autocomplete="email" required></label>
+          <label><span>Telefone / WhatsApp *</span><input name="telefone" autocomplete="tel" required></label>
+          <label><span>Instagram</span><input name="instagram" placeholder="@seuusuario"></label>
+          <label><span>Profissão *</span><input name="profissao" required></label>
+          <label><span>Idade *</span><input type="number" name="idade" min="16" max="100" required></label>
+          <label><span>Estado *</span><select name="estado" required><option value="">Selecione</option><option>AC</option><option>AL</option><option>AP</option><option>AM</option><option>BA</option><option>CE</option><option>DF</option><option>ES</option><option>GO</option><option>MA</option><option>MT</option><option>MS</option><option>MG</option><option>PA</option><option>PB</option><option>PR</option><option>PE</option><option>PI</option><option>RJ</option><option>RN</option><option>RS</option><option>RO</option><option>RR</option><option>SC</option><option>SP</option><option>SE</option><option>TO</option><option>Exterior</option></select></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-step" data-step="3">
+        <legend>Sua igreja e liderança</legend>
+        <div class="fields">
+          <label><span>Igreja em que congrega *</span><input name="igreja" required></label>
+          <label><span>Nome do pastor ou liderança direta *</span><input name="lider_nome" required></label>
+          <label><span>Telefone do pastor ou liderança *</span><input name="lider_telefone" required></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-step" data-step="4">
+        <legend>Queremos conhecer você</legend>
+        <div class="fields">
+          <label><span>Já realizou alguma outra viagem missionária? *</span><textarea name="outras_viagens" rows="3" required placeholder="Se sim, conte brevemente onde e quando. Se não, escreva “Não”."></textarea></label>
+          <label><span>O que é missão para você? *</span><textarea name="o_que_e_missao" rows="5" required></textarea></label>
+          <label><span>Como conheceu a Associação IDE Missões? *</span><textarea name="como_conheceu_ide" rows="3" required></textarea></label>
+        </div>
+      </fieldset>
+
+      <fieldset class="form-step" data-step="5">
+        <legend>Documentos, saúde e confirmações</legend>
+        <div class="fields two">
+          <label><span>RG *</span><input name="rg" required></label>
+          <label><span>CPF *</span><input name="cpf" inputmode="numeric" required></label>
+        </div>
+        <label class="block-field"><span>Informações médicas importantes *</span><textarea name="informacoes_medicas" rows="4" required placeholder="Alergias, medicamentos de uso contínuo, restrições, condições relevantes ou escreva “Nenhuma”."></textarea></label>
+
+        <div class="confirmations">
+          <label><input type="checkbox" name="confirma_congrega" required><span>Confirmo que estou congregando em uma igreja.</span></label>
+          <label><input type="checkbox" name="confirma_lideranca" required><span>Tenho ciência de que a IDE entrará em contato com meu pastor ou líder para confirmar minha participação.</span></label>
+          <label><input type="checkbox" name="confirma_treinamentos" required><span>Comprometo-me a participar das reuniões e treinamentos da equipe.</span></label>
+          <label><input type="checkbox" name="confirma_logistica" required><span>Li e compreendi as datas e a logística de viagem do meu grupo.</span></label>
+          <label><input type="checkbox" name="confirma_valores" required><span>Estou ciente do investimento de R$ 1.700, passagem aérea não inclusa, e do sinal de R$ 400 até 15/11/2026 após aprovação.</span></label>
+          <label><input type="checkbox" name="consentimento_dados" required><span>Autorizo o tratamento dos dados enviados para fins de seleção, organização e segurança da expedição missionária Sertão 2027.</span></label>
+        </div>
+      </fieldset>
+
+      <input type="hidden" name="grupo" id="grupo">
+      <input type="hidden" name="status_inicial" value="Pré-inscrição">
+      <div id="formMessage" class="form-message" role="status" aria-live="polite"></div>
+      <div class="form-actions">
+        <button type="button" class="btn ghost form-prev" id="prevBtn" hidden>Voltar</button>
+        <button type="button" class="btn primary form-next" id="nextBtn">Continuar</button>
+        <button type="submit" class="btn primary form-submit" id="submitBtn" hidden>Enviar pré-inscrição</button>
+      </div>
+      <p class="form-status" id="formStatus">As inscrições abrem em 01/10/2026.</p>
+    </form>
   </div>
 </section>
 
@@ -142,21 +215,5 @@
 </main>
 
 <footer><img src="assets/logo-ide.png" alt="IDE Missões"><span>em parceria com Mãos para o Sertão</span><small>© 2027 IDE Missões</small></footer>
-<script>
-(function(){
-  const btn=document.getElementById('formButton');
-  const status=document.getElementById('formStatus');
-  const openAt=new Date('2026-10-01T00:00:00-03:00');
-  const preview=new URLSearchParams(location.search).get('preview')==='1';
-  if(new Date()<openAt && !preview){
-    btn.classList.add('disabled');
-    btn.setAttribute('aria-disabled','true');
-    btn.addEventListener('click',e=>e.preventDefault());
-    status.textContent='As inscrições abrem em 01/10/2026. Volte a partir da meia-noite (horário de Brasília).';
-  } else {
-    status.textContent='Inscrições abertas enquanto houver vagas. Após o preenchimento, acompanhe o contato da equipe IDE Missões.';
-  }
-})();
-</script>
-</body>
+<script src="form.js"></script>\n</body>
 </html>
