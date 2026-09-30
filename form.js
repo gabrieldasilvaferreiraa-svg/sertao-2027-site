@@ -112,7 +112,7 @@
           'Content-Type':'application/json',
           'apikey':cfg.supabaseAnonKey,
           'Authorization':`Bearer ${cfg.supabaseAnonKey}`,
-          'Prefer':'return=representation'
+          'Prefer':'return=minimal'
         },
         body:JSON.stringify(payload)
       });
@@ -125,7 +125,7 @@
           <span>PRÉ-INSCRIÇÃO RECEBIDA</span>
           <h3>Obrigado, ${payload.nome_completo.split(' ')[0]}.</h3>
           <p>Sua inscrição foi registrada para <b>${payload.grupo}</b>.</p>
-          <p>Status inicial: <b>${saved?.status || 'Pré-inscrição'}</b>.</p>
+          <p>Sua pré-inscrição foi recebida com sucesso.</p>
           <p>A equipe da IDE Missões analisará suas respostas e entrará em contato pelo WhatsApp informado. A vaga só é confirmada após aprovação e pagamento do sinal.</p>
         </div>`;
     } catch (err) {
