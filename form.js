@@ -130,7 +130,13 @@
         </div>`;
     } catch (err) {
       message.classList.add('error');
-      message.textContent = 'Não conseguimos concluir o envio agora. Confira sua internet e tente novamente. Se o problema continuar, entre em contato com a IDE Missões.';
+      if (err?.message === 'DUPLICATE') {
+        message.textContent = 'Já existe uma pré-inscrição com este CPF. Se precisar corrigir algum dado, entre em contato com a IDE Missões.';
+      } else if (err?.message === 'SERVICE_STARTING') {
+        message.textContent = 'O sistema de inscrições está reiniciando. Seus dados continuam preenchidos. Aguarde cerca de 1 minuto e toque novamente em “Enviar pré-inscrição”.';
+      } else {
+        message.textContent = 'Não conseguimos concluir o envio agora. Seus dados continuam preenchidos. Aguarde alguns segundos e tente novamente.';
+      }
       submitBtn.disabled = false;
       submitBtn.textContent = 'Enviar pré-inscrição';
       console.error(err);

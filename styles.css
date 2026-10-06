@@ -102,3 +102,61 @@
   .work-photo img{aspect-ratio:3/4}
   .closing-photo,.closing-photo img{min-height:430px;height:430px}
 }
+
+/* Ajustes urgentes mobile 06/10/2026 */
+.hero-title .small{
+  position:relative;
+  z-index:2;
+  margin-bottom:22px;
+  line-height:1.25;
+}
+.hero-title strong{
+  display:block;
+  position:relative;
+  z-index:1;
+  line-height:.86;
+  margin:0;
+}
+.hero-title .under{
+  margin-top:14px;
+  margin-bottom:12px;
+}
+.year-row{
+  display:flex;
+  align-items:baseline;
+  gap:16px;
+  flex-wrap:nowrap;
+}
+.year-row span,
+.year-row b{
+  font-family:'Anton',Impact,sans-serif;
+  font-weight:400;
+  line-height:1;
+}
+.year-row span{
+  font-size:44px;
+  letter-spacing:.04em;
+}
+.year-row b{
+  font-size:58px;
+  letter-spacing:.02em;
+}
+.money-title>strong{
+  white-space:nowrap;
+  font-size:clamp(72px,10vw,132px);
+  letter-spacing:-.025em;
+}
+[hidden]{display:none!important}
+.form-actions .btn[hidden]{display:none!important}
+
+@media(max-width:600px){
+  .hero-title{margin-top:28px;line-height:1}
+  .hero-title .small{font-size:11px;letter-spacing:.42em;margin-bottom:26px}
+  .hero-title strong{font-size:28vw;line-height:.82}
+  .hero-title .under{margin-top:18px;margin-bottom:12px}
+  .hero-title em{font-size:16.2vw;line-height:.95}
+  .year-row{gap:12px;margin-top:34px}
+  .year-row span,.year-row b{font-size:13vw;letter-spacing:.02em}
+  .money-title>strong{font-size:20vw;line-height:1;white-space:nowrap}
+  .money-title p{font-size:15px;line-height:1.45}
+}
