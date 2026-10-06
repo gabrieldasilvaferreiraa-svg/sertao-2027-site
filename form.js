@@ -106,37 +106,49 @@
 
     try {
       const payload = cleanObject(new FormData(form));
-      const response = await fetch(`${cfg.supabaseUrl}/rest/v1/inscricoes`, {
+
+      const sendRegistration = () => fetch(`${cfg.supabaseUrl}/rest/v1/rpc/enviar_inscricao_sertao`, {
         method:'POST',
         headers:{
           'Content-Type':'application/json',
           'apikey':cfg.supabaseAnonKey,
-          'Authorization':`Bearer ${cfg.supabaseAnonKey}`,
-          'Prefer':'return=minimal'
+          'Authorization':`Bearer ${cfg.supabaseAnonKey}`
         },
-        body:JSON.stringify(payload)
+        body:JSON.stringify({payload})
       });
-      const body = await response.json().catch(() => null);
-      if (!response.ok) throw new Error(body?.message || body?.details || 'Não foi possível enviar.');
 
-      const saved = Array.isArray(body) ? body[0] : body;
+      let response;
+      try {
+        response = await sendRegistration();
+      } catch (networkError) {
+        await new Promise(resolve => setTimeout(resolve, 2500));
+        response = await sendRegistration();
+      }
+
+      if (response.status >= 500) {
+        await new Promise(resolve => setTimeout(resolve, 2500));
+        response = await sendRegistration();
+      }
+
+      const body = await response.json().catch(() => null);
+      if (!response.ok) {
+        throw new Error(body?.message || body?.details || 'SUBMIT_ERROR');
+      }
+
+      const result = typeof body === 'string' ? body : String(body || '');
+      const alreadyExists = result === 'already_exists';
+
       form.innerHTML = `
         <div class="success-card">
-          <span>PRÉ-INSCRIÇÃO RECEBIDA</span>
-          <h3>Obrigado, ${payload.nome_completo.split(' ')[0]}.</h3>
-          <p>Sua inscrição foi registrada para <b>${payload.grupo}</b>.</p>
-          <p>Sua pré-inscrição foi recebida com sucesso.</p>
-          <p>A equipe da IDE Missões analisará suas respostas e entrará em contato pelo WhatsApp informado. A vaga só é confirmada após aprovação e pagamento do sinal.</p>
+          <span>${alreadyExists ? 'PRÉ-INSCRIÇÃO JÁ RECEBIDA' : 'PRÉ-INSCRIÇÃO RECEBIDA'}</span>
+          <h3>${alreadyExists ? 'Sua inscrição já consta no sistema.' : `Obrigado, ${payload.nome_completo.split(' ')[0]}.`}</h3>
+          <p>Sua pré-inscrição está registrada para <b>${payload.grupo}</b>.</p>
+          <p>${alreadyExists ? 'Não é necessário enviar novamente.' : 'Sua pré-inscrição foi recebida com sucesso.'}</p>
+          <p>A equipe da IDE Missões analisará as respostas e entrará em contato pelo WhatsApp informado. A vaga só é confirmada após aprovação e pagamento do sinal.</p>
         </div>`;
     } catch (err) {
       message.classList.add('error');
-      if (err?.message === 'DUPLICATE') {
-        message.textContent = 'Já existe uma pré-inscrição com este CPF. Se precisar corrigir algum dado, entre em contato com a IDE Missões.';
-      } else if (err?.message === 'SERVICE_STARTING') {
-        message.textContent = 'O sistema de inscrições está reiniciando. Seus dados continuam preenchidos. Aguarde cerca de 1 minuto e toque novamente em “Enviar pré-inscrição”.';
-      } else {
-        message.textContent = 'Não conseguimos concluir o envio agora. Seus dados continuam preenchidos. Aguarde alguns segundos e tente novamente.';
-      }
+      message.textContent = 'Não conseguimos concluir o envio neste momento. Seus dados continuam preenchidos. Aguarde alguns segundos e tente novamente.';
       submitBtn.disabled = false;
       submitBtn.textContent = 'Enviar pré-inscrição';
       console.error(err);
