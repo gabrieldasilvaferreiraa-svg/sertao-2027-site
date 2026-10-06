@@ -160,3 +160,14 @@
   .money-title>strong{font-size:20vw;line-height:1;white-space:nowrap}
   .money-title p{font-size:15px;line-height:1.45}
 }
+
+
+/* Correção definitiva do espaçamento DERRAMAREI / ÁGUA */
+.hero-title .small:first-child{
+  margin-bottom:46px!important;
+}
+@media(max-width:600px){
+  .hero-title .small:first-child{
+    margin-bottom:64px!important;
+  }
+}
